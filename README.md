@@ -59,3 +59,4 @@ implemented / researched. (You may skip this question if you are doing the lab b
 ![Screenshot](/images/11.png)
 23. In case the MSR values return a 0, it means that the hardware assisted virtualization feature was not enabled in the VM.
 24. The complete output of the `dmesg` command is in the `output.txt` file in the `cmpe283_1` directory
+25. The modified C file and other files for Assignment 1 are in the `cmpe283_1` directory
