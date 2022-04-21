@@ -30,7 +30,6 @@ implemented / researched. (You may skip this question if you are doing the lab b
 [Screenshot]
 4. Check the specifications of the machine using `df -h` command
 [Screenshot]
-
 5. Install git using `sudo apt install git` command 
 6. Download and build the Linux kernel source code by forking the Linux repository at `github.com/torvalds/linux.git` to your own repository
 7. After forking the repo, clone the repo using `git clone` command
@@ -50,3 +49,7 @@ implemented / researched. (You may skip this question if you are doing the lab b
 18. Reboot the system and verify the new kernel version using `uname -a` 
 19. Finally, run the `make` command using Makefile downloaded from canvas
 20. Once that step is successfully completed, check if the kernel file was installed using `ls *ko` and if installed, use the `sudo insmod 283-1.ko` command to insert the modules`
+21. There would not be any output on the screen because `lsmod grep | cmpe283` command shows that the module was already loaded, but since the Kernel module doesn't print to the console window, we have to use the `dmesg` command to see the output.
+22. Final Output would be displayed as:
+[Screenshot]
+23. In case the MSR values return a 0, it means that the hardware assisted virtualization feature was not enabled in the VM.
