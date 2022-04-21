@@ -50,8 +50,10 @@ implemented / researched. (You may skip this question if you are doing the lab b
 17. After that, type the command `sudo make install` to install the kernel
 18. Reboot the system and verify the new kernel version using `uname -a` 
 19. Finally, run the `make` command using Makefile downloaded from canvas
-20. Once that step is successfully completed, check if the kernel file was installed using `ls *ko` and if installed, use the `sudo insmod 283-1.ko` command to insert the modules`
+![Screenshot](/images/13.png)
+20. Once that step is successfully completed, check if the kernel file was installed using `ls *ko` and if installed, use the `sudo insmod 283-1.ko` command to insert the modules
 21. There would not be any output on the screen because `lsmod grep | cmpe283` command shows that the module was already loaded, but since the Kernel module doesn't print to the console window, we have to use the `dmesg` command to see the output.
+![Screenshot](/images/12.png)
 22. Final Output would be displayed as:
 ![Screenshot](/images/8.png)
 ![Screenshot](/images/9.png)
