@@ -44,10 +44,10 @@ implemented / researched. (You may skip this question if you are doing the lab b
 14. After that, use the `make` command by `cd` to the directory where Makefile was downloaded. If there are errors, it could be because of a version mismatch related to the kernel version checked out from git
 [Screenshot]
 15. In that case, use `make -j 8 modules` and once the step is completed, build the kernel using `make -j 8` command.
+![Screenshot](/images/6.png)
 ![Screenshot](/images/7.png)
 16. Next step would be to package the kernel and modules by typing `sudo make INSTALL_MOD_STRIP=1 modules_install`
 17. After that, type the command `sudo make install` to install the kernel
-![Screenshot](/images/6.png)
 18. Reboot the system and verify the new kernel version using `uname -a` 
 19. Finally, run the `make` command using Makefile downloaded from canvas
 20. Once that step is successfully completed, check if the kernel file was installed using `ls *ko` and if installed, use the `sudo insmod 283-1.ko` command to insert the modules`
