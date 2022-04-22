@@ -1,6 +1,6 @@
 # CMPE283 : Virtualization
 
-#### Assignment 1: Instrumentation via Hypercell
+#### Assignment 2: Instrumentation via Hypercell
 #### Name:  Puneet Tokhi
 #### Professor: Michael Larkin
 
@@ -23,15 +23,25 @@ Linux machine set up and configuration as Assignment 1
 1. Worked on the same Linux machine as Assignment 1
 2. Modified the files `cpuid.c` and `vmx.c` and added necessary variables for total exits and total time
 3. Run the commands `make modules` and `make -j 8 modules` to build the Kernel
+![Screenshot](/cmpe283_2/images/1.png)
+![Screenshot](/cmpe283_2/images/7.png)
+![Screenshot](/cmpe283_2/images/2.png)
 4. After that all the steps need to be completed as the root user starting with running the command `make INSTALL_MOD_STRIP=1 modules_install` to install and package the modules
 5. Check if the kvm module for the hypervisor is loaded using `lsmod | grep kvm`. If it already loaded, then get rid of it using `rmmod kvm_intel`
+![Screenshot](/cmpe283_2/images/3.png)
 6. Once that is done, use the `modprob kvm` command which will load th kvm if there are no errors in the code. Then, use the `lsmod | grep kvm` to see if the kvm is loaded
+![Screenshot](/cmpe283_2/images/4.png)
 7. Once all the steps are done, the machine needs to be rebooted.
 8. After rebooting, install the virtual manager using `sudo apt install virt-manager`
 9. In the Virtual Manager, add a test file to check the number of exits and the number of cycles spent in the exit
-10. THe other way to test is by installing cpuid package in the virtual manager by using `sudo apt install cpuid`
-11. This is the final output:
+10. The other way to test is by installing cpuid package in the virtual manager by using `sudo apt install cpuid`
+11. The output of CPUID manager before reboot is below:
+![Screenshot](/cmpe283_2/images/6.png)
+
+12. This is the final output:
+
+![Screenshot](/cmpe283_2/images/5.png)
 
 **Q3. Comment on the frequency of exits- does the number of exits increase at a stable rate? or are there more exits performed during certain VM operations? Approximately how many exits does a full VM boot entail?**
 
-**Ans** The number of exits seem to increase at a constant rate. Despite the VM being pretty much idle, the number of exits seem to increase about 1000-2000 exits everytime I checked using the cpuid package. The most number of exits were observed during the VM bootup which easily crossed more than half a million exits. The VM boot seemed to spent a lot of time in cycles and the exits were the largest compared to all other operations. 
+**Ans** The number of exits seem to increase at a constant rate. I tested the numbr of exits using the my test code by calling the cpuid function inside the C code and passing eax with the value of 0x4FFFFFFF. I noticed that the number of exits seem to increase about 4000-5000 exits everytime I checked using my test code. The most number of exits were observed during the VM bootup which easily crossed almost a million exits. The VM boot seemed to spent a lot of time in cycles and the exits were the largest compared to all other operations. After doing some I/O operations like creating a file, the exits seem to increase significantly.
