@@ -96,18 +96,22 @@ Linux machine set up and configuration as Assignment 1
 ![Screenshot](/cmpe283_2/images/7.png)
 ![Screenshot](/cmpe283_2/images/2.png)
 4. After that all the steps need to be completed as the root user starting with running the command `make INSTALL_MOD_STRIP=1 modules_install` to install and package the modules
-5. Check if the kvm module for the hypervisor is loaded using `lsmod | grep kvm`. If it already loaded, then get rid of it using `rmmod kvm_intel`
+5. Check if the kvm module for the hypervisor is loaded using `lsmod | grep kvm`. 
+6. If it already loaded, then get rid of it using the `rmmod kvm_intel` command
 ![Screenshot](/cmpe283_2/images/3.png)
-6. Once that is done, use the `modprob kvm` command which will load th kvm if there are no errors in the code. Then, use the `lsmod | grep kvm` to see if the kvm is loaded
+7. Once that is done, use the `modprob kvm` command which will load th kvm if there are no errors in the code. 
+8. Then, use the `lsmod | grep kvm` to see if the kvm is loaded
+
 ![Screenshot](/cmpe283_2/images/4.png)
-7. Once all the steps are done, the machine needs to be rebooted.
-8. After rebooting, install the virtual manager using `sudo apt install virt-manager`
-9. In the Virtual Manager, add a test file to check the number of exits and the number of cycles spent in the exit
-10. The other way to test is by installing cpuid package in the virtual manager by using `sudo apt install cpuid`
-11. The output of CPUID manager before reboot is below:
+
+9. Once all the steps are done, the machine needs to be rebooted.
+10. After rebooting, install the virtual manager using `sudo apt install virt-manager`
+11. In the Virtual Manager, add a test file to check the number of exits and the number of cycles spent in the exit
+12. The other way to test is by installing cpuid package in the virtual manager by using `sudo apt install cpuid`
+13. The output of CPUID manager before reboot is below:
 ![Screenshot](/cmpe283_2/images/6.png)
 
-12. This is the final output:
+14. This is the final output:
 
 ![Screenshot](/cmpe283_2/images/5.png)
 
