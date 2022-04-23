@@ -41,11 +41,12 @@ implemented / researched. (You may skip this question if you are doing the lab b
 11. After that, copy the config file using `cp /boot/config` based on the kernel version and create a new config file
 12. Then, use the `make oldconfig` command which will prompt you to answer multiple questions. To get the default answer, press the Enter key
 13. Once process is completed, use the `make prepare` command. 
-14. After that, use the `make` command by `cd` to the directory where Makefile was downloaded. If there are errors, it could be because of a version mismatch related to the kernel version checked out from git
-[Screenshot]
+14. After that, use the `make` command by `cd` to the directory where Makefile was downloaded. If there are errors, it could be because of a version mismatch related to the kernel version checked out from git.
 15. In that case, use `make -j 8 modules` and once the step is completed, build the kernel using `make -j 8` command.
 ![Screenshot](/images/6.png)
+
 ![Screenshot](/images/7.png)
+
 16. Next step would be to package the kernel and modules by typing `sudo make INSTALL_MOD_STRIP=1 modules_install`
 17. After that, type the command `sudo make install` to install the kernel
 18. Reboot the system and verify the new kernel version using `uname -a` 
@@ -115,4 +116,4 @@ Linux machine set up and configuration as Assignment 1
 
 **Q3. Comment on the frequency of exits- does the number of exits increase at a stable rate? or are there more exits performed during certain VM operations? Approximately how many exits does a full VM boot entail?**
 
-**Ans** The number of exits seem to increase at a constant rate. I tested the numbr of exits using the my test code by calling the cpuid function inside the C code and passing eax with the value of 0x4FFFFFFF. I noticed that the number of exits seem to increase about 4000-5000 exits everytime I checked using my test code. The most number of exits were observed during the VM bootup which easily crossed almost a million exits. The VM boot seemed to spent a lot of time in cycles and the exits were the largest compared to all other operations. After doing some I/O operations like creating a file, the exits seem to increase significantly.
+**Ans** The number of exits seem to increase at a constant rate. I tested the number of exits using my test code by calling the `cpuid` function inside my test C code by passing eax with the value of 0x4FFFFFFF. I noticed that the number of exits seem to increase about 4000-5000 exits everytime I checked using my test code. The most number of exits were observed during the VM bootup which easily crossed almost a million exits. The VM boot seemed to spent a lot of time in cycles and the exits were the largest compared to all other operations. Also, after doing some I/O operations like creating a file, the exits seem to increase significantly.
