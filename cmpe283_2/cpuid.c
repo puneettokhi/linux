@@ -1465,9 +1465,9 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 	    
 	    printk("CPUID(0x4FFFFFFF), total exits: %u\n", totalExits);
 	    kvm_rax_write(vcpu, eax);
-    	kvm_rbx_write(vcpu, ebx);
-    	kvm_rcx_write(vcpu, ecx);
-    	kvm_rdx_write(vcpu, edx);
+    	    kvm_rbx_write(vcpu, ebx);
+    	    kvm_rcx_write(vcpu, ecx);
+    	    kvm_rdx_write(vcpu, edx);
     	
 	}
 	else if(eax == 0x4FFFFFFE){
@@ -1480,9 +1480,9 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 	    printk("CPUID(0x4FFFFFFE), total time spent in the VM: %llu\n cycles", totalTime);
 	    
 	    kvm_rax_write(vcpu, eax);
-    	kvm_rbx_write(vcpu, ebx);
-    	kvm_rcx_write(vcpu, ecx);
-    	kvm_rdx_write(vcpu, edx);
+    	    kvm_rbx_write(vcpu, ebx);
+    	    kvm_rcx_write(vcpu, ecx);
+    	    kvm_rdx_write(vcpu, edx);
 	}
 	else{
 	    kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
