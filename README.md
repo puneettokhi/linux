@@ -1,7 +1,7 @@
 
 # CMPE283 : Virtualization
 
-#### Assignment 1: Discovering VMX Features
+## Assignment 1: Discovering VMX Features
 #### Name:  Puneet Tokhi
 #### Professor: Michael Larkin
 
@@ -67,9 +67,7 @@ implemented / researched. (You may skip this question if you are doing the lab b
 -----------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------
 
-# CMPE283 : Virtualization
-
-#### Assignment 2: Instrumentation via Hypercell
+## Assignment 2: Instrumentation via Hypercell
 #### Name:  Puneet Tokhi
 #### Professor: Michael Larkin
 
