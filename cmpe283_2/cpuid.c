@@ -1474,7 +1474,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 	    kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
 	    eax = 0;
 	    ebx = (int) (totalTime >> 32);
-	    ecx = totalTime;
+	    ecx = (int) (totalTime & 0xFFFFFFFF)
 	    edx = 0;
 	    
 	    printk("CPUID(0x4FFFFFFE), total time spent in the VM: %llu\n cycles", totalTime);
