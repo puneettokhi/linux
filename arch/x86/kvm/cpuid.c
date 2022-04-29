@@ -30,6 +30,22 @@ EXPORT_SYMBOL(totalTime);
 u32 totalExits = 0;
 EXPORT_SYMBOL(totalExits);
 
+
+/*
+ * Assignment 3
+ */
+ 
+ // total number of exits reasons that exits at present
+ u32 total_basic_exit_reasons = 69;
+ 
+ // time spent processing each exit
+ u64 time_processing_exit[69];
+ EXPORT_SYMBOL(time_processing_exit);
+ 
+ // count of each exit type
+ u32 exit_type_count[69];
+ EXPORT_SYMBOL(exit_type_count);
+ 
 /*
  * Unlike "struct cpuinfo_x86.x86_capability", kvm_cpu_caps doesn't need to be
  * aligned to sizeof(unsigned long) because it's not accessed via bitops.
@@ -1444,6 +1460,16 @@ bool kvm_cpuid(struct kvm_vcpu *vcpu, u32 *eax, u32 *ebx,
 }
 EXPORT_SYMBOL_GPL(kvm_cpuid);
 
+// check if exit reason exists 
+bool is_exit_valid(u32 ecx){
+    if (ecx >=0 && ecx <= total_basic_exit_reasons){
+        return true; 
+    }
+    else{
+        return false;
+    }
+}
+
 int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 {
 	u32 eax, ebx, ecx, edx;
@@ -1463,7 +1489,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 	    ecx = 0;
 	    edx = 0;
 	    
-	    printk("CPUID(0x4FFFFFFF), total exits: %u\n", totalExits);
+	    printk(KERN_INFO "CPUID(0x4FFFFFFF), total exits: %u\n", totalExits);
 	    kvm_rax_write(vcpu, eax);
     	kvm_rbx_write(vcpu, ebx);
     	kvm_rcx_write(vcpu, ecx);
@@ -1474,18 +1500,79 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 	    kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
 	    eax = 0;
 	    ebx = (int) (totalTime >> 32);
-	    ecx = (int) (totalTime & 0xFFFFFFFF)
+	    ecx = (int) (totalTime & 0xFFFFFFFF);
 	    edx = 0;
 	    
-	    printk("CPUID(0x4FFFFFFE), total time spent in the VM: %llu\n cycles", totalTime);
+	    printk(KERN_INFO "CPUID(0x4FFFFFFE), total time spent in the VM: %llu\n cycles", totalTime);
 	    
 	    kvm_rax_write(vcpu, eax);
     	kvm_rbx_write(vcpu, ebx);
     	kvm_rcx_write(vcpu, ecx);
     	kvm_rdx_write(vcpu, edx);
 	}
+	
+	// Assignment 3
+	else if(eax == 0x4FFFFFFD){
+	    if (is_exit_valid(ecx)){
+	    // exit type not defined
+	        if(ecx == 35 || ecx == 38 || ecx == 42 || ecx == 65){
+	            printk(KERN_INFO "Given exit type is undefined: %d", ecx);
+	            
+	            // returning all zeros except edx
+	            eax = 0;
+	            ebx = 0;
+	            ecx = 0;
+	            edx = 0xFFFFFFFF;   
+	            }
+
+	        else{
+	        // returning value only in eax
+	            eax = exit_type_count[(int)ecx];
+	            printk(KERN_INFO "The given exit number is: %d, and the number of exits is: %d", (int)ecx, exit_type_count[(int) ecx]);
+	        }
+	    }  
+	    else{
+	        // exit number is not enabled in the KVM
+	        eax = 0;
+	        ebx = 0;
+	        ecx = 0;
+	        edx = 0;
+	        printk(KERN_INFO "Exit number %d is not enabled in the KVM", ecx);
+	    }  
+	}
+	else if(eax == 0x4FFFFFFC){
+	
+	    // check if exit exists
+	    if (is_exit_valid(ecx)){
+	        if (ecx == 35 || ecx == 38 || ecx == 42 || ecx == 65){
+	            printk(KERN_INFO "Given exit type is undefined: %d", ecx);
+	            
+	            // returning all zeros except edx
+	            eax = 0;
+	            ebx = 0;
+	            ecx = 0;
+	            edx = 0xFFFFFFFF;   
+	        }
+	        else{
+	            // returning high 32 bits of total time spent for specific exit in ebx
+	            ebx = (time_processing_exit[(int)ecx] >> 32);
+	            // returning low 32 bits of total time spent for specific exit in ecx 
+	            ecx = (time_processing_exit[(int)ecx] & 0x4FFFFFFFF);
+	            printk(KERN_INFO "The given exit number is: %d, and the total time spent processing the exit is: %llu", (int)ecx, time_processing_exit[(int)ecx]); 
+	        }
+	    }
+	    
+	    else{
+	        // exit number is not enabled in the KVM
+	        eax = 0;
+	        ebx = 0;
+	        ecx = 0;
+	        edx = 0;
+	        printk(KERN_INFO "Exit number %d is not enabled in the KVM", ecx);
+	    }
+	}  
 	else{
-	    kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
+	    kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false); 
 	    kvm_rax_write(vcpu, eax);
 	    kvm_rbx_write(vcpu, ebx);
 	    kvm_rcx_write(vcpu, ecx);

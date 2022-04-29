@@ -74,6 +74,12 @@ MODULE_LICENSE("GPL");
 extern u32 totalExits;
 extern u64 totalTime;
 
+// Assignment 3
+u32 total_basic_exit_reasons = 69;
+
+extern u32 exit_type_count[69];
+extern u64 time_processing_exit[69];
+
 #ifdef MODULE
 static const struct x86_cpu_id vmx_cpu_id[] = {
 	X86_MATCH_FEATURE(X86_FEATURE_VMX, NULL),
@@ -6023,6 +6029,12 @@ static int __vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
     startTime = rdtsc();
     
     totalExits++;  // incrementing total exits
+	
+	// Assignment 3 scenario
+    if(exit_reason.basic <= total_basic_exit_reasons){
+        exit_type_count[exit_reason.basic]++;  // incrementing the exit count
+    }	
+	
 	/*
 	 * Flush logged GPAs PML buffer, this will make dirty_bitmap more
 	 * updated. Another good is, in kvm_vm_ioctl_get_dirty_log, before
@@ -6184,6 +6196,8 @@ static int __vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
     
     intrinsicTime = endTime - startTime;  // get the delta of total time
     totalTime = totalTime + intrinsicTime;
+    
+    time_processing_exit[(int)exit_handler_index] = intrinsicTime + time_processing_exit[(int)exit_handler_index];
     
 	return kvm_vmx_exit_handlers[exit_handler_index](vcpu);
 
