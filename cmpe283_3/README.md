@@ -32,7 +32,8 @@ Same linux machine set up and configuration as Assignment 2
 10. Once all the steps are done, the machine needs to be rebooted for the changes to take effect.
 11. After rebooting, launch te inner VM and use the command `sudo apt install cpuid` to install the cpuid package in the inner VM
 12. Once CPUID package is installed, I ran a for loop with leaf 0x4FFFFFFD until 69 which is the total number of basic exit types
-    `for exits in `seq 0 69`; do cpuid -l 0x4ffffffd -s $exits; done`
+    
+    `for exits in seq 0 69; do cpuid -l 0x4ffffffd -s $exits; done`
 13. The final output is displayed below:
 
 |  ![Screenshot](/cmpe283_3/images/1.png)  |   ![Screenshot](/cmpe283_3/images/2.png)  
