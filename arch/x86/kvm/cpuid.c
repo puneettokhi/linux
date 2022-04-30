@@ -1528,7 +1528,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 	        else{
 	        // returning value only in eax
 	            eax = exit_type_count[(int)ecx];
-	            printk(KERN_INFO "The given exit number is: %d, and the number of exits is: %d", (int)ecx, exit_type_count[(int) ecx]);
+	            printk(KERN_INFO "Exit Number = %d, No_of_exits = %d", (int)ecx, exit_type_count[(int) ecx]);
 	        }
 	    }  
 	    else{
